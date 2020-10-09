@@ -15,3 +15,4 @@ python -m nltk.downloader punkt
 python -m nltk.downloader treebank  
 
 python app.py will start a web server on localhost:6789
+flask run will start a web server on localhost:5000

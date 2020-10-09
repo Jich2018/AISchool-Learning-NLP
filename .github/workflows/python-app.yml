@@ -37,7 +37,7 @@ jobs:
     - name: 'Azure login'
       uses: azure/login@v1.1
       with:
-        creds: ${{ secrets.NLPMOVIERECOSECRET }}
+        creds: ${{ secrets.NLPMOVIERECOSECRET }} # credential is created by az ad sp create-for-rbac --name "Movie Reco - NLP Learning" --sdk-auth --role contributor --scopes /subscriptions/{{sub-id}}/resourceGroups/{{resource-group-name}}/providers/Microsoft.Web/sites/{{application-name}}
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
