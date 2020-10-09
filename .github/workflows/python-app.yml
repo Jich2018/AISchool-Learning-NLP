@@ -1,7 +1,7 @@
 # This workflow will install Python dependencies, run tests and lint with a single version of Python
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: NLP Learning Application
+name: Build and Deploy NLP Learning Application to Azure
 
 on:
   push:
@@ -10,9 +10,9 @@ on:
     branches: [ master ]
 
 jobs:
-  build:
+  build-and-deploy:
 
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
 
     steps:
     - uses: actions/checkout@v2
@@ -29,3 +29,14 @@ jobs:
       run: |
         # stop the build if there are Python syntax errors or undefined names
         flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+    - name: Build using AppService-Build # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deploy
+      uses: azure/appservice-build@v2
+      with:
+        platform: python
+        platform-version: '3.7'
+    - name: 'Deploy to Azure Web App'
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: 'movie-reco'
+        slot-name: 'production'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_92ccf45aabda4bb3aff938ddd8c07a34 }}
