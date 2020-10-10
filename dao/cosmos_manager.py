@@ -1,10 +1,11 @@
 from azure.cosmos.cosmos_client import CosmosClient
+from flask import current_app as app
 
 
 class Cosmos_Manager:
 
-    def __init__(self, context):
-        self.client = CosmosClient(context["endpoint"], context["key"])
+    def __init__(self):
+        self.client = CosmosClient(app.config["NLP_COSMOS_ENDPOINT"], app.config["NLP_COSMOS_KEY"])
 
     def add(self, data):
         database_name = data["database"]
@@ -23,11 +24,11 @@ class Cosmos_Manager:
 
         database = self.client.get_database_client(database_name)
         container = database.get_container_client(container_name)
-
+        
         return list(container.query_items(query=query, enable_cross_partition_query=True))
 
 
 if __name__ == "__main__":
-    m = Cosmos_Manager({"endpoint": "https://review-data.documents.azure.com:443/", "key": ""})
-    print(m.get({"database": "reviews", "container": "records", "query": "SELECT * FROM c"}))
+    m = Cosmos_Manager()
+    print(m.get({"database": "movie-reco", "container": "reviews", "query": "SELECT * FROM c"}))
 
