@@ -8,6 +8,8 @@ class Operation(IntFlag):
     LOWERCASE = 2
     STEMMING = 4
     LEMMATIZATION = 8
+    PUNCTUATION = 16
+    HTML = 32
 
 
 train_sents = treebank.tagged_sents()[:5000]
@@ -56,6 +58,14 @@ def __lemmatize(lemmatizer, token, tag):
         return lemmatizer.lemmatize(token, 'n')
 
 
+def cleanhtml(html):
+    import re
+    # to remove the tag and something like &nsbm
+    cleanr = re.compile('</?.*?>|&([a-z0-9]+|#[0-9]{1,6}|#x[0-9a-f]{1,6});')
+    cleantext = re.sub(cleanr, '', html)
+    return cleantext
+
+
 def stem(tokens, context: dict):
     from nltk.stem import PorterStemmer
     stemming_name = "porter"
@@ -80,6 +90,14 @@ def remove_stop_word(tokens, context: dict):
 
 
 def process(sentence: str, opt: Operation, context: dict):
+
+    if Operation.HTML in opt: #must happen before the pubctuation otherwise cannot match the correct pattern
+        sentence = cleanhtml(sentence)
+
+    if Operation.PUNCTUATION in opt: 
+        import string
+        sentence = sentence.translate(str.maketrans('', '', string.punctuation))
+
     tokens = tokenize(sentence, context)
 
     if Operation.LOWERCASE in opt:
@@ -98,7 +116,9 @@ def process(sentence: str, opt: Operation, context: dict):
 
 
 if __name__ == '__main__':
-    print(process("this was an ate test", Operation.LEMMATIZATION | Operation.STEMMING | Operation.STOP_WORD, {"stemming": "lancaster"}))
+    test_tokens = process("this </br > was an ate test, but a real case.", Operation.HTML | Operation.LOWERCASE | Operation.PUNCTUATION, {"stemming": "lancaster"})
+    print(test_tokens)
+    
 
 
 
