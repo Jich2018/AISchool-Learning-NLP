@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h2><div class="mtitle"> {% block title %} {{ movie['title'] }} {% endblock %}</div></h2>
+    <p>
+    <div class="myear"> Year:</div> <span class="badge badge-primary">{{ movie['year'] }}</span>
+    </p>
+    <p>
+    <div class="mgenres"> Genres:</div><span class="badge badge-primary">{{ movie['genres'] }}</span>
+    </p>
+    <p>
+    <div class="mdescription"> Description:</div> <p>{{ movie['description'] }}</p>
+    </p>
+{% endblock %}

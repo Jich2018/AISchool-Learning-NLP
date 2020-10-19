@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1>{% block title %} Your favorite movies{% endblock %}</h1>
+    {% for movie in movies %}
+        <a href="{{ url_for('movie', movie_id=movie['id']) }}">
+		<h2> {{ movie['title'] }}</h2>
+	</a>
+	<span class="badge badge-primary">{{ movie['year'] }} </span>
+	<hr>
+    {% endfor %}
+{% endblock %}

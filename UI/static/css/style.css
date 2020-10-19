@@ -1,0 +1,22 @@
+h1 {
+	border: 2px #eee solid;
+	color: brown;
+	text-align: center;
+	padding: 10px;
+}
+
+.mtitle {
+        font-family: "Times New Roman", Times, serif;
+}
+
+.myear {
+        font-family: "Times New Roman", Times, serif;
+}
+
+.mgenres {
+        font-family: "Times New Roman", Times, serif;
+}
+
+.mdescription {
+        font-family: "Times New Roman", Times, serif;
+}
