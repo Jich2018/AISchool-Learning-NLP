@@ -1,5 +1,6 @@
 import nltk
 import os
+import pickle
 import random
 
 from nltk.corpus import stopwords
@@ -16,34 +17,24 @@ unsupbasepath = "d:\\nlp\\dataset\\aclImdb\\train\\unsup"
 
 
 def LoadReviews(basepath):
+    print("loading reviews under "+basepath+" ...")
     reviewfiles = os.listdir(basepath)
     count = 0
     for reviewfile in reviewfiles:
         basename, ext = os.path.splitext(reviewfile)
-        print(basename)
+        #print(basename)
         movieid = basename.split('_')[0]
         reviewscore= basename.split('_')[1]
-        print('review score for movie {0} is {1}'.format(movieid, reviewscore)) 
+        #print('review score for movie {0} is {1}'.format(movieid, reviewscore)) 
         fullfilename = os.path.join(basepath, reviewfile) 
         with open(fullfilename, 'r', encoding='utf-8') as f: 
-            print("read file ", fullfilename)
+            #print("read file ", fullfilename)
             review = f.read()
             taggedreviews.append((movieid, review, reviewscore))
             count = count + 1
-        if count >3000:
+        if count >6000:
                break
-
-LoadReviews(posbasepath)
-LoadReviews(negbasepath)
-
-print(len(taggedreviews))
-random.shuffle(taggedreviews)
-
-
-# prepare and process reviews, and turn them into features
-allpostext = ''
-allnegtext = ''
-freqwords = []
+    print("reviews loaded.")
 
 def cleanupwords(words) :
     mystopwords = {":", ",", ":", "{", "}", "[", "]", "\\", "\\r\\n\\", "''", ";"}
@@ -56,61 +47,59 @@ def getwords(review) :
     reviewwords = cleanupwords(reviewwords)
     return reviewwords
 
+# load reviews
+LoadReviews(posbasepath)
+LoadReviews(negbasepath)
+print("total reviews loaded:" +str(len(taggedreviews)))
+
+# shuffle reviews order
+print("shuffle data")
+random.shuffle(taggedreviews)
+
+# prepare and process reviews, and turn them into features
+allpostext = ''
+allnegtext = ''
+wordsfreq = []
+
+print("prepare features")
 for reviewinfo in taggedreviews :
     movieid = reviewinfo[0]
     review = reviewinfo[1]
     score = reviewinfo[2]
-    print("tokenizing word for ", movieid)
+    #print("tokenizing word for ", movieid)
     reviewwords = getwords(review)
-    print("get word frequency")
-    freqwords.append((nltk.FreqDist(reviewwords), score))
+    #print("get word frequency")
+    wordsfreq.append((nltk.FreqDist(reviewwords), score))
     if int(score) > 5:
         allpostext = allpostext + review 
     elif int(score) < 5:
         allnegtext = allnegtext + review
 
 #calculate words frequency distribution for all positive and negative reviews
+print("calculate global word frequency")
 allposwordsfreq = nltk.FreqDist(getwords(allpostext))
 allnegwordsfreq = nltk.FreqDist(getwords(allnegtext))
-
-def diff(a, b):
-    b = set(b)
-    return [aa for aa in a if aa not in b]
-
-def getfeatures(commonposwords, commonnegwords, freq) :
-    features = {}
-    for word in commonposwords:
-        if word in freq.keys():
-            features[word] = freq[word]
-    for word in commonnegwords:
-        if word in freq.keys():
-            features[word] = freq[word]
-    print("features got:")
-    print(features[1:20])
-    return features
-
-def getuniquecommonwords(wordsdist, allwordsdist) :
-    return diff(wordsdist.most_common(300), allwordsdist.most_common(300))
 
 featuresets = []
 print("get top words from positive and negative reviews")
 topposwords = allposwordsfreq.most_common(1000)
 topnegwords = allnegwordsfreq.most_common(1000)
+
+# show most common words from positive and negative reviews
+print("Top 30 words from positive reviews:")
+print(topposwords[1:30])
+print("Top 30 words from negative reviews:")
+print(topnegwords[1:30])
+
 print("populate feature set and result data")
-for reviewwordsinfo in freqwords :
+for reviewwordsinfo in wordsfreq :
     wordsfreq = reviewwordsinfo[0] #words frequency distribution for a movie review
     score = reviewwordsinfo[1] #review score for a movie
     # pick top N most frequent words as feature, set correponding frequency of it in a review to be value for those features
     featuresets.append((wordsfreq, "positive" if int(score) > 5 else "negative" ))
 
-# show most common words from positive and negative reviews
-print("Most common words from positive reviews:")
-print(topposwords[1:10])
-print("Most common words from negative reviews:")
-print(topnegwords[1:10])
-
 # build ML model and measure accuracy
-train_set, test_set = train_test_split(featuresets, test_size=0.5)
+train_set, test_set = train_test_split(featuresets, test_size=0.3)
 
 print("sample train set: " )
 print(train_set[1:5])
@@ -119,6 +108,10 @@ classifier = nltk.NaiveBayesClassifier.train(train_set)
 print("Naive Bayes accuracy: ", nltk.classify.accuracy(classifier, test_set))
 classifier.show_most_informative_features(15)
 
+#save model
+with open("naivebayes_classifier.pickle", "wb") as f:
+    pickle.dump(classifier, f)
+
 #classifier1 = nltk.DecisionTreeClassifier.train(train_set)
 #print("Decision tree accuracy: ",  nltk.classify.accuracy(classifier1, test_set))
 #classifier1.show_most_informative_features(15)
@@ -126,11 +119,15 @@ classifier.show_most_informative_features(15)
 
 # predict using model built
 print("predict review score")
-#entries = os.listdir(unsupbasepath)
-#for entry in entries :
-#    with open(os.path.join(unsupbasepath, entry), 'r', encoding='utf-8') as f:
-#        review = f.read()
-#        reviewwords = getwords(review)
-#        print(entry + " actual prediction is " )
-#        freqreviewwords = nltk.FreqDist(reviewwords)
-#        print(classifier.prob_classify(getfeatures(getuniquecommonwords(freqreviewwords, allfreqwords), freqreviewwords)).max())
+entries = os.listdir(unsupbasepath)
+c = 0
+for entry in entries :
+    if c > 5:
+        break
+    c = c + 1
+    with open(os.path.join(unsupbasepath, entry), 'r', encoding='utf-8') as f:
+        review = f.read()
+        reviewwords = getwords(review)
+        print(entry + " actual prediction is " )
+        wordsfreq = nltk.FreqDist(reviewwords)
+        print(classifier.prob_classify(wordsfreq).max())

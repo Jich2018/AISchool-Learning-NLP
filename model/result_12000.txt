@@ -1,0 +1,46 @@
+loading reviews under d:\nlp\dataset\aclImdb\train\pos ...
+reviews loaded.
+loading reviews under d:\nlp\dataset\aclImdb\train\neg ...
+reviews loaded.
+total reviews loaded:12002
+shuffle data
+prepare features
+calculate global word frequency
+get top words from positive and negative reviews
+Top 30 words from positive reviews:
+[('i', 17166), ('the', 10739), ('film', 9543), ('movie', 8448), ('one', 6327), ('it', 4459), ('like', 4196), ('good', 3534), ('story', 3219), ('great', 3126), ('this', 2993), ('time', 2874), ('see', 2777), ('would', 2703), ('well', 2648), ('also', 2622), ('really', 2570), ('even', 2368), ('first', 2286), ('much', 2211), ('love', 2084), ('people', 2071), ('best', 2054), ('get', 2025), ('show', 1887), ('way', 1858), ('life', 1809), ('films', 1801), ('many', 1785)]
+Top 30 words from negative reviews:
+[('i', 19934), ('movie', 11404), ('the', 10420), ('film', 8494), ('one', 5880), ('like', 5221), ('it', 4040), ('would', 3736), ('even', 3569), ('bad', 3382), ('good', 3380), ('this', 2911), ('really', 2876), ('could', 2745), ('time', 2635), ('see', 2603), ('get', 2384), ('much', 2346), ('story', 2246), ('people', 2226), ('make', 2139), ('made', 2048), ('first', 1914), ('plot', 1884), ('movies', 1883), ('acting', 1854), ('way', 1818), ('think', 1795), ('well', 1766)]
+populate feature set and result data
+sample train set:
+[(FreqDist({'i': 4, 'film': 4, 'like': 2, 'br': 2, 'saw': 1, 'earlier': 1, 'today': 1, 'amazed': 1, 'accurate': 1, 'dialog': 1, ...}), 'positive'), (FreqDist({'movie': 6, 'the': 5, 'pokemon': 4, 'it': 2, 'make': 2, 'digimon': 2, 'anime': 2, 'seemed': 1, 'appeal': 1, 'new': 1, ...}), 'negative'), (FreqDist({'br': 6, 'film': 5, 'i': 3, 'clearly': 2, 'wanted': 2, 'like': 2, 'wasted': 2, 'this': 1, 'lot': 1, 'promise': 1, ...}), 'negative'), (FreqDist({'br': 16, 'i': 9, 'troy': 4, 'omirus': 3, 'epos': 3, 'well': 3, 'one': 3, 'best': 3, 'it': 3, 'actual': 3, ...}), 'negative')]
+Naive Bayes accuracy:  0.8508747570119412
+Most Informative Features
+                   worse = 2              negati : positi =     25.6 : 1.0
+                horrible = 2              negati : positi =     22.9 : 1.0
+                  horrid = 1              negati : positi =     20.2 : 1.0
+               wonderful = 2              positi : negati =     19.5 : 1.0
+                   awful = 2              negati : positi =     19.3 : 1.0
+               masterful = 1              positi : negati =     17.7 : 1.0
+              perfection = 1              positi : negati =     17.1 : 1.0
+                 abysmal = 1              negati : positi =     16.9 : 1.0
+                 hideous = 1              negati : positi =     16.9 : 1.0
+                    life = 4              positi : negati =     16.4 : 1.0
+                     bad = 4              negati : positi =     15.8 : 1.0
+                explores = 1              positi : negati =     15.1 : 1.0
+              uninspired = 1              negati : positi =     14.9 : 1.0
+                   worst = 2              negati : positi =     14.6 : 1.0
+          excruciatingly = 1              negati : positi =     14.3 : 1.0
+predict review score
+0_0.txt actual prediction is
+positive
+10000_0.txt actual prediction is
+negative
+10001_0.txt actual prediction is
+negative
+10002_0.txt actual prediction is
+positive
+10003_0.txt actual prediction is
+positive
+10004_0.txt actual prediction is
+positive
