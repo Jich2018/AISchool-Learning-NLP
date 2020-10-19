@@ -1,0 +1,24 @@
+populate feature set and result data
+Most common words from positive reviews:
+[('i', 8180), ('the', 5503), ('film', 4693), ('movie', 4283), ('one', 3166), ('it', 2213), ('like', 2115), ('good', 1778), ('great', 1572)]
+Most common words from negative reviews:
+[('i', 9960), ('movie', 5730), ('the', 5094), ('film', 4253), ('one', 2935), ('like', 2530), ('it', 2091), ('would', 1879), ('even', 1760)]
+sample train set:
+[(FreqDist({'i': 5, 'when': 2, 'friendship': 2, 'kills': 2, 'kind': 2, 'anorexic': 2, 'bulimic': 2, 'if': 2, 'ask': 2, 'things': 2, ...}), 'positive'), (FreqDist({'the': 3, 'movie': 2, 'hamer': 2, 'nothing': 2, 'worth': 2, 'br': 2, 'better': 2, 'i': 2, 'mimicking': 1, 'long': 1, ...}), 'negative'), (FreqDist({'br': 6, 'time': 4, 'never': 3, 'way': 3, 'madison': 3, 'see': 3, 'this': 2, 'man': 2, 'indian': 2, 'fight': 2, ...}), 'negative'), (FreqDist({'br': 8, 'movie': 5, 'i': 4, 'the': 3, 'special': 2, 'set': 2, 'takes': 2, 'place': 2, 'ancient': 2, 'desert': 2, ...}), 'negative')]
+Naive Bayes accuracy:  0.8643785404865045
+Most Informative Features
+                   worst = 2              negati : positi =     24.5 : 1.0
+                     bad = 4              negati : positi =     17.3 : 1.0
+              amateurish = 1              negati : positi =     16.6 : 1.0
+                 wasting = 1              negati : positi =     16.0 : 1.0
+                  wasted = 1              negati : positi =     15.2 : 1.0
+                 garbage = 1              negati : positi =     14.7 : 1.0
+               redeeming = 1              negati : positi =     14.7 : 1.0
+                   awful = 2              negati : positi =     12.7 : 1.0
+             magnificent = 1              positi : negati =     12.6 : 1.0
+                   waste = 1              negati : positi =     12.0 : 1.0
+                  boring = 2              negati : positi =     11.9 : 1.0
+                 unfunny = 1              negati : positi =     11.9 : 1.0
+                retarded = 1              negati : positi =     11.4 : 1.0
+                gripping = 1              positi : negati =     11.2 : 1.0
+               miserably = 1              negati : positi =     10.8 : 1.0
