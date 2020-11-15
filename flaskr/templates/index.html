@@ -1,12 +1,59 @@
-index test
+{% extends 'base.html' %}
 
-Data From CosmosDB:
-<br>
-Movie ID: {{ data['id'] }}
-<br>
-User ID: {{ data['uid'] }}
-<br>
-Movie Name: {{ data['reviews'][0]['name'] }}
-<br>
-Review: {{ data['reviews'][0]['review'] }}
+{% block content %}
+    <h1>{% block title %} All movies{% endblock %}</h1>
 
+    <div class="panel-group" id="accordion"></div>
+    {% for movie in movies %}
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title">
+                <a data-toggle="collapse" data-parent="#accordion" href="#collapse{{movie['id']}}">
+                {{movie['title']}}</a>
+            </h4>
+        </div>
+        <div id="collapse{{movie['id']}}" class="panel-collapse collapse in">
+            <div class="panel-body">
+                <span>asin:</span> {{movie['id']}}
+                </br>
+                <span>Description:</span>
+                </br>
+                {{ movie['description'] }}
+                </br>
+                <a href="{{ url_for('movie', movie_id=movie['id']) }}">
+                    More...
+                </a>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    <h1>Movie Recommendations</h1>
+    <p>UserId: <input type="text" size=10 name="userid"></p>
+        
+    <span id="result"></span>
+    <button class="btn btn-lg btn-primary btn-block" type="button" style="width: 150px">recommend</button>
+
+    <script type=text/javascript>
+        $(function() {
+            $('button').click(function() {
+            $.ajax({
+                url: '/user/'+$('input[name="userid"]').val()+'/movies',
+                type: 'GET',
+                success: function(response){
+                    response[0]["recommendations"]
+                    .forEach(item => $("#result")
+                    .append("<p>"+item["movieid"]+"</p>"))
+                },
+                error: function(error){
+                    console.log(error);
+                }
+		    });
+          });
+        });
+    </script>
+
+    </div>
+{% endblock %}

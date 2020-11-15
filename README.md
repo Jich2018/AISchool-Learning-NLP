@@ -16,3 +16,9 @@ python -m nltk.downloader treebank
 
 python app.py will start a web server on localhost:6789
 flask run will start a web server on localhost:5000
+
+
+TODO：
+the id in the reco matrix is not unique, every update will create a new record. 
+integrate with an tool to update the matrix and send signal at an interval. 
+
