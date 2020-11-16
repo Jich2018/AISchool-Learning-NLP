@@ -1,4 +1,0 @@
-to run this app, 
-set FLASK_APP=movies
-set FLASK_ENV=development
-flask run 

@@ -4,8 +4,14 @@ from flask import current_app as app
 
 class Cosmos_Manager:
 
-    def __init__(self):
-        self.client = CosmosClient(app.config["NLP_COSMOS_ENDPOINT"], app.config["NLP_COSMOS_KEY"])
+    def __init__(self, cosmosEndpoint = None, cosmosKey = None):
+        if cosmosEndpoint is None:
+            cosmosEndpoint = app.config["NLP_COSMOS_ENDPOINT"]
+        
+        if cosmosKey is None:
+            cosmosKey = app.config["NLP_COSMOS_KEY"]
+
+        self.client = CosmosClient(cosmosEndpoint, cosmosKey)
 
     def add(self, data):
         database_name = data["database"]
