@@ -9,4 +9,14 @@
 	<span class="badge badge-primary">{{ movie['year'] }} </span>
 	<hr>
     {% endfor %}
+
+    <h1>Movies recommended for you</h1>
+    {% for movie in recommendedmovies %}
+        <a href="{{ url_for('movie', movie_id=movie['id']) }}">
+		<h2> {{ movie['title'] }}</h2>
+	</a>
+	<span class="badge badge-primary">{{ movie['year'] }} </span>
+	<hr>
+    {% endfor %}
 {% endblock %}
+

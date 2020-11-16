@@ -5,9 +5,11 @@ app = Flask(__name__)
 mymovies = [{'id':1, 'title':'Titanic', 'description':'A seventeen-year-old aristocrat falls in love with a kind but poor artist aboard the luxurious, ill-fated R.M.S. Titanic.', 'year':'1997', 'genres':'Drama,Romance'},
         {'id':2, 'title':'Rush Hour','description':'A loyal and dedicated Hong Kong Inspector teams up with a reckless and loudmouthed L.A.P.D. detective to rescue the Chinese Consul kidnapped daughter, while trying to arrest a dangerous crime lord along the way.', 'year':'1998', 'genres': 'action, comedy, crime, thriller'}]
 
+myrecommovies = [{'id':1, 'title':'Saving Private Ryan', 'description':'Epic war movie with background of world war II.', 'year':'1998', 'genres':'Drama,War'}]
+
 @app.route('/')
 def index():
-    return render_template('index.html', movies=mymovies) 
+    return render_template('index.html', movies=mymovies, recommendedmovies=myrecommovies) 
 
 def get_movie(movie_id):
     movie = mymovies[movie_id-1]
