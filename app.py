@@ -20,14 +20,14 @@ def movie(movie_id):
     reviews = cosmos_manager.get({"database": "movie-reco", "container": "reviews", "query": "SELECT * FROM reviews c"})
     return render_template('movie.html', movie=result, reviews=reviews)
 
-@app.route('/user/<int:user_id>/movies')
+@app.route('/user/<user_id>/movies')
 def movies(user_id):
     cosmos_manager = Cosmos_Manager()
     query_arguments = request.args
 
     #default is for recommendation
-    query = f"SELECT * FROM recommendations c where c.userid={user_id}"
-    result = cosmos_manager.get({"database": "movie-reco", "container": "recommendations", "query": query})
+    query = f"SELECT * FROM recommendations c where c.reviewer='{user_id}'"
+    result = cosmos_manager.get({"database": "movie-reco-lstm", "container": "recommendations", "query": query})
 
     if "cat" in query_arguments:
         if query_arguments["cat"] == "viewed":

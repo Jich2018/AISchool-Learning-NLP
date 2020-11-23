@@ -43,9 +43,9 @@
                 url: '/user/'+$('input[name="userid"]').val()+'/movies',
                 type: 'GET',
                 success: function(response){
-                    response[0]["recommendations"]
-                    .forEach(item => $("#result")
-                    .append("<p>"+item["movieid"]+"</p>"))
+                    $("#result").append("<p>Recommanded Movies: </p>");
+                    Object.keys(response[0].recommendation).forEach(item => $("#result")
+                    .append("<p><a href=https://www.amazon.com/dp/" + item + ">" + item + "</a></p>"));                                                       
                 },
                 error: function(error){
                     console.log(error);
