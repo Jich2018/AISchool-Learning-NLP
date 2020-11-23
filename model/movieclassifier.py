@@ -32,7 +32,7 @@ def LoadReviews(basepath):
             review = f.read()
             taggedreviews.append((movieid, review, reviewscore))
             count = count + 1
-        if count >6000:
+        if count >2000:
                break
     print("reviews loaded.")
 
@@ -93,10 +93,10 @@ print(topnegwords[1:30])
 
 print("populate feature set and result data")
 for reviewwordsinfo in wordsfreq :
-    wordsfreq = reviewwordsinfo[0] #words frequency distribution for a movie review
+    wf = reviewwordsinfo[0] #words frequency distribution for a movie review
     score = reviewwordsinfo[1] #review score for a movie
     # pick top N most frequent words as feature, set correponding frequency of it in a review to be value for those features
-    featuresets.append((wordsfreq, "positive" if int(score) > 5 else "negative" ))
+    featuresets.append((wf, "positive" if int(score) > 5 else "negative" ))
 
 # build ML model and measure accuracy
 train_set, test_set = train_test_split(featuresets, test_size=0.3)

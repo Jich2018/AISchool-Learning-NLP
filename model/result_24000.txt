@@ -1,0 +1,46 @@
+loading reviews under d:\nlp\dataset\aclImdb\train\pos ...
+reviews loaded.
+loading reviews under d:\nlp\dataset\aclImdb\train\neg ...
+reviews loaded.
+total reviews loaded:4002
+shuffle data
+prepare features
+calculate global word frequency
+get top words from positive and negative reviews
+Top 30 words from positive reviews:
+[('i', 5527), ('the', 3671), ('film', 3136), ('movie', 2830), ('one', 2108), ('it', 1506), ('like', 1400), ('good', 1161), ('great', 1011), ('this', 984), ('time', 980), ('story', 973), ('see', 937), ('well', 894), ('would', 884), ('also', 844), ('really', 817), ('even', 774), ('first', 736), ('people', 733), ('get', 729), ('much', 715), ('best', 674), ('two', 671), ('show', 658), ('way', 622), ('love', 616), ('characters', 609), ('think', 580)]
+Top 30 words from negative reviews:
+[('i', 6825), ('movie', 3890), ('the', 3378), ('film', 2736), ('one', 1909), ('like', 1695), ('it', 1391), ('would', 1295), ('even', 1190), ('bad', 1153), ('good', 1143), ('time', 948), ('really', 947), ('this', 940), ('could', 938), ('see', 831), ('much', 808), ('story', 788), ('get', 759), ('people', 708), ('make', 704), ('made', 656), ('plot', 646), ('acting', 634), ('first', 633), ('way', 604), ('movies', 603), ('well', 598), ('and', 586)]
+populate feature set and result data
+sample train set:
+[(FreqDist({'br': 4, 'show': 2, 'cans': 2, 'she': 2, 'not': 2, 'i': 2, 'brycer': 2, 'time': 2, 'network': 2, 'are': 1, ...}), 'negative'), (FreqDist({'i': 2, 'it': 2, 'story': 2, 'coach': 2, 'this': 1, 'got': 1, 'one': 1, 'worst': 1, 'movies': 1, 'ever': 1, ...}), 'negative'), (FreqDist({'br': 6, 'pimlico': 3, 'burgundy': 2, 'this': 1, 'funny': 1, 'british': 1, 'comedy': 1, 'shows': 1, 'might': 1, 'happen': 1, ...}), 'positive'), (FreqDist({'freeman': 3, 'movie': 2, 'i': 2, 'morgan': 2, 'pussy': 2, 'br': 2, 'pathetic': 1, 'worse': 1, 'bad': 1, 'ca': 1, ...}), 'negative')]
+Naive Bayes accuracy:  0.8642797668609492
+Most Informative Features
+                   worst = 2              negati : positi =     18.8 : 1.0
+              delightful = 1              positi : negati =     17.2 : 1.0
+                   waste = 1              negati : positi =     17.2 : 1.0
+               pointless = 1              negati : positi =     15.4 : 1.0
+                    film = 8              positi : negati =     14.0 : 1.0
+              uninspired = 1              negati : positi =     12.7 : 1.0
+                   awful = 2              negati : positi =     12.7 : 1.0
+                superbly = 1              positi : negati =     12.7 : 1.0
+                  wasted = 1              negati : positi =     12.2 : 1.0
+                  awards = 1              positi : negati =     12.0 : 1.0
+              underrated = 1              positi : negati =     12.0 : 1.0
+                    junk = 1              negati : positi =     12.0 : 1.0
+                  impact = 1              positi : negati =     11.9 : 1.0
+             brilliantly = 1              positi : negati =     11.5 : 1.0
+                 growing = 1              positi : negati =     11.4 : 1.0
+predict review score
+0_0.txt actual prediction is
+negative
+10000_0.txt actual prediction is
+negative
+10001_0.txt actual prediction is
+negative
+10002_0.txt actual prediction is
+positive
+10003_0.txt actual prediction is
+positive
+10004_0.txt actual prediction is
+positive

@@ -2,7 +2,6 @@ movieclassifier.py implements machine learning classifier(s) based on movie revi
 from https://ai.stanford.edu/~amaas/data/sentiment/
 movieclassifier.py assumes above data downloaded to D:\NLP\dataset\aclImdb
 
-result files captured run results using a portion of the dataset (6000 means 6000 reviews used
-and 12000 means 12000 reviews are used etc)
+result_### files captured run results using a portion of the dataset (e.g. 12000 means 12000 reviews are used etc)
 
 trained classfier would be saved to pickle file locally
