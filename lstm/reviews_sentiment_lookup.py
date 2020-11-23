@@ -46,21 +46,26 @@ class ReviewSentimentLookup:
 
 
     def gen_recommendation_data(self):
-        with open("recommendation.json", 'w') as f:
-            for reviewer, pos in self.__reviewer_to_asin_pos.items():
-                asins = []
-                for asin in pos:
-                    reviewers = self.get_pos_reviewers_by_asin(asin)
-                    reviewers.remove(reviewer)
-                    for other in reviewers:
-                        asins.extend(self.get_pos_asins_by_reviewer(other))
+        for reviewer, pos in self.__reviewer_to_asin_pos.items():
+            asins = []
+            for asin in pos:
+                reviewers = self.get_pos_reviewers_by_asin(asin)
+                reviewers.remove(reviewer)
+                for other in reviewers:
+                    asins.extend(self.get_pos_asins_by_reviewer(other))
 
-                counter = Counter(asins)
-                counter = {k: v for k, v in sorted(counter.items(), key=lambda item: item[1], reverse=True)}
-                counter = dict(islice(counter.items(), 10))
+            counter = Counter(asins)
+            counter = {k: v for k, v in sorted(counter.items(), key=lambda item: item[1], reverse=True)}
 
-                d = {'reviewer': reviewer, 'recommendation': counter}
-                s = json.dumps(d)+"\n"
+            # remove the reviewed movies of the reviewer
+            for asin in pos:
+                counter.pop(asin, None)
+            counter = dict(islice(counter.items(), 10))
+
+            d = {'reviewer': reviewer, 'recommendation': counter}
+            s = json.dumps(d)+"\n"
+            name = "recommendations/{}.json".format(reviewer)
+            with open(name, 'w') as f:
                 f.write(s)
 
 
